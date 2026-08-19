@@ -1,0 +1,645 @@
+<title>Pranchas Toro Camper</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&family=Saira+Condensed:wght@600;700&display=swap">
+
+<style>
+  :root{
+    --paper:#F1F2EF;
+    --panel:#E4E7E2;
+    --sheet:#FBFBF9;
+    --ink:#191E1C;
+    --ink-2:#5A635E;
+    --rule:#C3CAC3;
+    --accent:#B8450F;
+    --accent-2:#2C5E73;
+    --hatch:rgba(25,30,28,.10);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#111614;
+      --panel:#1B211F;
+      --sheet:#171D1B;
+      --ink:#E7ECE7;
+      --ink-2:#98A49D;
+      --rule:#333C38;
+      --accent:#F0803F;
+      --accent-2:#78B8CE;
+      --hatch:rgba(231,236,231,.10);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#111614;
+    --panel:#1B211F;
+    --sheet:#171D1B;
+    --ink:#E7ECE7;
+    --ink-2:#98A49D;
+    --rule:#333C38;
+    --accent:#F0803F;
+    --accent-2:#78B8CE;
+    --hatch:rgba(231,236,231,.10);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font:400 16px/1.6 "IBM Plex Sans",system-ui,sans-serif;
+    margin:0;
+    padding:clamp(20px,4vw,56px) clamp(16px,4vw,40px) 80px;
+  }
+  .wrap{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(28px,4vw,48px)}
+
+  /* ---- cabeçalho ---- */
+  .head{display:flex;flex-direction:column;gap:18px;padding-bottom:26px;border-bottom:2px solid var(--ink)}
+  .eyebrow{font:500 12px/1 "IBM Plex Mono",monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+  h1{
+    font:700 clamp(38px,7vw,68px)/0.94 "Saira Condensed",Impact,sans-serif;
+    letter-spacing:.005em;text-transform:uppercase;text-wrap:balance;margin:0;
+  }
+  .sub{max-width:60ch;color:var(--ink-2);margin:0}
+  .meta{display:flex;flex-wrap:wrap;gap:10px 28px;font:500 12.5px/1.4 "IBM Plex Mono",monospace;text-transform:uppercase;letter-spacing:.06em}
+  .meta b{display:block;color:var(--ink-2);font-weight:400;font-size:11px;letter-spacing:.12em}
+  .alert{
+    border-left:3px solid var(--accent);background:var(--panel);
+    padding:14px 18px;font-size:14.5px;color:var(--ink);max-width:72ch;
+  }
+  .alert strong{font-weight:500}
+
+  /* ---- prancha ---- */
+  .sheet{background:var(--sheet);border:1px solid var(--rule);display:flex;flex-direction:column}
+  .tb{
+    display:grid;grid-template-columns:auto 1fr auto;align-items:baseline;gap:8px 18px;
+    padding:12px 18px;border-bottom:1px solid var(--rule);
+  }
+  .tb-n,.tb-e{font:500 11.5px/1.4 "IBM Plex Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);white-space:nowrap}
+  .tb-n{color:var(--accent)}
+  .tb h2{font:600 clamp(19px,2.4vw,25px)/1.15 "Saira Condensed",sans-serif;text-transform:uppercase;letter-spacing:.02em;margin:0}
+  .draw{padding:20px 18px 6px;overflow-x:auto}
+  .draw svg{display:block;width:100%;min-width:520px;height:auto}
+  figure{margin:0}
+  figcaption{padding:2px 18px 16px;font-size:14.5px;color:var(--ink-2);max-width:76ch}
+  .notes{
+    border-top:1px solid var(--rule);padding:14px 18px 18px;
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:6px 28px;
+    font:400 12.5px/1.55 "IBM Plex Mono",monospace;color:var(--ink);
+  }
+  .notes p{margin:0;display:flex;gap:9px}
+  .notes p::before{content:"—";color:var(--accent);flex:none}
+  .notes .q::before{content:"?";color:var(--accent-2)}
+
+  /* ---- desenho: classes svg ---- */
+  .ln{fill:none;stroke:var(--ink);stroke-width:1.7;stroke-linejoin:round;stroke-linecap:round}
+  .ln-t{fill:none;stroke:var(--ink);stroke-width:1;opacity:.6}
+  .ln-d{fill:none;stroke:var(--ink);stroke-width:1.3;stroke-dasharray:7 5;opacity:.75}
+  .acc{fill:none;stroke:var(--accent);stroke-width:1.9;stroke-linejoin:round;stroke-linecap:round}
+  .acc-d{fill:none;stroke:var(--accent);stroke-width:1.5;stroke-dasharray:7 5}
+  .blu{fill:none;stroke:var(--accent-2);stroke-width:1.8;stroke-linejoin:round}
+  .fill{fill:var(--panel)}
+  .fill-s{fill:var(--sheet)}
+  .hatch{fill:url(#hatch);stroke:var(--ink);stroke-width:1}
+  .dim{fill:none;stroke:var(--ink-2);stroke-width:1;marker-start:url(#ar);marker-end:url(#ar)}
+  .lead{fill:none;stroke:var(--ink-2);stroke-width:.9}
+  .t{font:400 12px/1 "IBM Plex Mono",monospace;fill:var(--ink)}
+  .t-s{font:400 10.5px/1 "IBM Plex Mono",monospace;fill:var(--ink-2)}
+  .t-b{font:600 13px/1 "Saira Condensed",sans-serif;letter-spacing:.09em;text-transform:uppercase;fill:var(--ink)}
+  .t-a{font:500 11px/1 "IBM Plex Mono",monospace;fill:var(--accent)}
+  .t-blu{font:500 11px/1 "IBM Plex Mono",monospace;fill:var(--accent-2)}
+  .mid{text-anchor:middle}
+  .end{text-anchor:end}
+  .num{fill:var(--accent);stroke:none}
+  .num-t{font:600 12px/1 "IBM Plex Mono",monospace;fill:var(--sheet);text-anchor:middle}
+
+  .key{display:flex;flex-wrap:wrap;gap:8px 22px;padding:0 18px 16px;font:400 12.5px/1.5 "IBM Plex Mono",monospace;color:var(--ink-2)}
+  .key span{display:flex;align-items:center;gap:8px}
+  .key i{width:26px;height:0;border-top:2px solid var(--ink);display:inline-block}
+  .key i.d{border-top-style:dashed}
+  .key i.a{border-top-color:var(--accent)}
+
+  footer{border-top:1px solid var(--rule);padding-top:22px;color:var(--ink-2);font-size:14px;max-width:70ch}
+  footer b{color:var(--ink);font-weight:500}
+</style>
+
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 8" refX="9.6" refY="4" markerWidth="8" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,4 L0,8 Z" fill="var(--ink-2)"/>
+    </marker>
+    <marker id="arI" viewBox="0 0 10 8" refX="9.6" refY="4" markerWidth="9" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,4 L0,8 Z" fill="var(--ink)"/>
+    </marker>
+    <marker id="arA" viewBox="0 0 10 8" refX="9.6" refY="4" markerWidth="9" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,4 L0,8 Z" fill="var(--accent)"/>
+    </marker>
+    <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="8" stroke="var(--hatch)" stroke-width="3"/>
+    </pattern>
+  </defs>
+</svg>
+
+<div class="wrap">
+
+<header class="head">
+  <span class="eyebrow">Fiat Toro 2016–2019 · conversão car camping</span>
+  <h1>Pranchas de<br>montagem</h1>
+  <p class="sub">Oito desenhos esquemáticos do projeto: onde mora cada sistema, como o estrado abre, como a energia e a água circulam, e o que a área externa ocupa no chão do acampamento.</p>
+  <div class="meta">
+    <span><b>Materiais</b>~R$ 22.370</span>
+    <span><b>Prazo</b>8 etapas / 8 semanas</span>
+    <span><b>Caçamba</b>1,35 × 1,49 m (2,20 m com tampa)</span>
+    <span><b>Autonomia alvo</b>3–4 dias fora da rede</span>
+  </div>
+  <p class="alert"><strong>Leia antes de cortar madeira:</strong> estes são esquemas de proporção aproximada, desenhados a partir das medidas do texto do projeto. As cotas reais da caçamba, do payload e dos módulos saem da medição da Etapa 1 — confira no carro antes de comprar chapa.</p>
+</header>
+
+<!-- ============ PRANCHA 01 ============ -->
+<section class="sheet">
+  <header class="tb">
+    <span class="tb-n">Prancha 01</span>
+    <h2>Corte lateral — onde mora cada sistema</h2>
+    <span class="tb-e">Etapa 1–2</span>
+  </header>
+  <figure>
+    <div class="draw">
+      <svg viewBox="0 0 1010 500" role="img" aria-label="Corte lateral da Fiat Toro mostrando rack com placa solar, cortina na cabine, caixa d'água atrás da cabine, estrado com colchão, compartimento inferior com bateria, módulo de cozinha lateral e extensão da cama sobre a tampa rebatida.">
+        <!-- solo -->
+        <line class="ln-t" x1="40" y1="378" x2="985" y2="378"/>
+        <!-- silhueta -->
+        <path class="ln" d="M120,332 L120,282 L156,238 L252,232 L284,170 L432,168 L456,214 L812,214 L812,332 Z"/>
+        <!-- rodas -->
+        <circle class="ln fill-s" cx="210" cy="332" r="46"/><circle class="ln-t" cx="210" cy="332" r="18"/>
+        <circle class="ln fill-s" cx="706" cy="332" r="46"/><circle class="ln-t" cx="706" cy="332" r="18"/>
+        <!-- vidro cabine -->
+        <path class="ln-t" d="M296,178 L424,176 L424,212 L296,212 Z"/>
+        <line class="ln-d" x1="352" y1="176" x2="352" y2="212"/>
+        <!-- rack + solar -->
+        <rect class="ln fill" x="296" y="158" width="128" height="9"/>
+        <polygon class="acc" points="300,156 420,146 420,138 300,148"/>
+        <!-- piso interno da caçamba -->
+        <line class="ln" x1="456" y1="326" x2="812" y2="326"/>
+        <!-- caixa d'agua -->
+        <rect class="ln fill" x="458" y="232" width="50" height="94"/>
+        <line class="ln-t" x1="458" y1="252" x2="508" y2="252"/>
+        <!-- estrado + colchao -->
+        <rect class="ln fill" x="516" y="280" width="284" height="11"/>
+        <rect class="ln fill" x="516" y="254" width="284" height="26" rx="7"/>
+        <!-- compartimento inferior -->
+        <rect class="hatch" x="530" y="298" width="72" height="24"/>
+        <rect class="ln-t" x="640" y="300" width="120" height="22"/>
+        <!-- modulo cozinha lateral -->
+        <rect class="acc-d" x="600" y="224" width="170" height="28"/>
+        <!-- tampa rebatida + extensao -->
+        <rect class="ln" x="812" y="284" width="186" height="8"/>
+        <rect class="ln-d" x="812" y="254" width="186" height="26"/>
+        <!-- chamadas -->
+        <g class="lead">
+          <line x1="306" y1="112" x2="334" y2="142"/>
+          <line x1="196" y1="124" x2="306" y2="182"/>
+          <line x1="452" y1="124" x2="476" y2="230"/>
+          <line x1="790" y1="118" x2="786" y2="252"/>
+          <line x1="566" y1="404" x2="566" y2="300"/>
+          <line x1="876" y1="196" x2="774" y2="238"/>
+          <line x1="930" y1="346" x2="905" y2="292"/>
+        </g>
+        <g>
+          <circle class="num" cx="306" cy="102" r="11"/><text class="num-t" x="306" y="106">1</text>
+          <circle class="num" cx="196" cy="114" r="11"/><text class="num-t" x="196" y="118">2</text>
+          <circle class="num" cx="452" cy="114" r="11"/><text class="num-t" x="452" y="118">3</text>
+          <circle class="num" cx="790" cy="108" r="11"/><text class="num-t" x="790" y="112">4</text>
+          <circle class="num" cx="566" cy="414" r="11"/><text class="num-t" x="566" y="418">5</text>
+          <circle class="num" cx="886" cy="192" r="11"/><text class="num-t" x="886" y="196">6</text>
+          <circle class="num" cx="940" cy="356" r="11"/><text class="num-t" x="940" y="360">7</text>
+        </g>
+        <!-- cotas -->
+        <line class="dim" x1="516" y1="440" x2="812" y2="440"/>
+        <text class="t-s mid" x="664" y="434">1,35 m — caçamba fechada</text>
+        <line class="dim" x1="516" y1="470" x2="998" y2="470"/>
+        <text class="t-s mid" x="757" y="464">2,20 m — com a tampa rebatida</text>
+        <line class="ln-t" x1="516" y1="446" x2="516" y2="476"/>
+        <line class="ln-t" x1="812" y1="446" x2="812" y2="476"/>
+        <line class="ln-t" x1="998" y1="446" x2="998" y2="476"/>
+      </svg>
+    </div>
+    <figcaption>O carro inteiro em corte: cada número marca um sistema e a etapa em que ele entra. Peso pesado (bateria, ferramenta, água) fica baixo e entre os eixos; o que é leve sobe pro rack.</figcaption>
+  </figure>
+  <div class="notes">
+    <p>1 · rack de teto + placa solar dobrável (etapa 3 e 7)</p>
+    <p>2 · cortina blackout e exaustor da cabine (etapa 8)</p>
+    <p>3 · caixa d'água 40–50 L atrás da cabine (etapa 4)</p>
+    <p>4 · estrado retrátil + colchão 12 cm D33 (etapa 2)</p>
+    <p>5 · compartimento sob o estrado: bateria de lítio em caixa estanque + ferramentas (etapa 2 e 3)</p>
+    <p>6 · módulo cozinha retrátil na lateral (etapa 5)</p>
+    <p>7 · extensão da cama sobre a tampa rebatida</p>
+    <p class="q">altura livre com a lona/capota fechada — medir antes de definir a espessura do colchão</p>
+  </div>
+</section>
+
+<!-- ============ PRANCHA 02 ============ -->
+<section class="sheet">
+  <header class="tb">
+    <span class="tb-n">Prancha 02</span>
+    <h2>Planta da caçamba — layout dos módulos</h2>
+    <span class="tb-e">Etapa 1 · 6</span>
+  </header>
+  <figure>
+    <div class="draw">
+      <svg viewBox="0 0 720 620" role="img" aria-label="Planta da caçamba vista de cima: caixa d'água à esquerda atrás da cabine, bateria à direita, guarda-roupa de um lado, despensa do outro, projeção do estrado em tracejado e módulo de cozinha saindo pela tampa traseira.">
+        <!-- cabine -->
+        <rect class="hatch" x="160" y="66" width="420" height="42"/>
+        <text class="t-s mid" x="370" y="93">cabine</text>
+        <!-- caçamba -->
+        <rect class="ln" x="160" y="110" width="420" height="380"/>
+        <!-- caixa d'agua e bateria -->
+        <rect class="ln fill" x="172" y="122" width="114" height="64"/>
+        <text class="t-s mid" x="229" y="150">caixa d'água</text>
+        <text class="t-s mid" x="229" y="166">40–50 L</text>
+        <rect class="ln fill" x="454" y="122" width="114" height="64"/>
+        <text class="t-s mid" x="511" y="150">bateria lítio</text>
+        <text class="t-s mid" x="511" y="166">caixa estanque</text>
+        <!-- guarda-roupa / despensa -->
+        <rect class="ln fill" x="172" y="200" width="100" height="270"/>
+        <text class="t-b mid" x="222" y="330" transform="rotate(-90 222 330)">guarda-roupa</text>
+        <rect class="ln fill" x="468" y="200" width="100" height="270"/>
+        <text class="t-b mid" x="518" y="330" transform="rotate(-90 518 330)">despensa</text>
+        <!-- centro -->
+        <text class="t-s mid" x="370" y="326">vão central — caixas pesadas</text>
+        <text class="t-s mid" x="370" y="344">e esteira sob o estrado</text>
+        <!-- projeção do estrado -->
+        <rect class="ln-d" x="166" y="116" width="408" height="368"/>
+        <text class="t-s" x="176" y="478">projeção do estrado</text>
+        <!-- cozinha na tampa -->
+        <rect class="acc-d" x="296" y="492" width="150" height="52"/>
+        <text class="t-a mid" x="371" y="516">módulo cozinha</text>
+        <text class="t-a mid" x="371" y="532">sai pela tampa</text>
+        <!-- cotas -->
+        <line class="dim" x1="160" y1="44" x2="580" y2="44"/>
+        <text class="t-s mid" x="370" y="34">1,49 m</text>
+        <line class="dim" x1="120" y1="110" x2="120" y2="490"/>
+        <text class="t-s mid" x="120" y="304" transform="rotate(-90 120 304)">1,35 m</text>
+        <line class="ln-t" x1="160" y1="50" x2="160" y2="110"/>
+        <line class="ln-t" x1="580" y1="50" x2="580" y2="110"/>
+        <line class="ln-t" x1="126" y1="110" x2="160" y2="110"/>
+        <line class="ln-t" x1="126" y1="490" x2="160" y2="490"/>
+      </svg>
+    </div>
+    <figcaption>Água de um lado, bateria do outro: separar os dois equilibra o peso sobre os eixos e mantém o cabo de força longe de qualquer vazamento. O estrado (tracejado) passa por cima dos dois módulos laterais.</figcaption>
+  </figure>
+  <div class="key">
+    <span><i></i>estrutura fixa</span>
+    <span><i class="d"></i>elemento acima do plano de corte</span>
+    <span><i class="d a"></i>módulo que sai pra fora</span>
+  </div>
+  <div class="notes">
+    <p>largura útil entre caixas de roda: medir — é ela que define a chapa do estrado</p>
+    <p>guarda-roupa: cabideiro curto + 2 gavetas</p>
+    <p>despensa: prateleiras + caixas herméticas</p>
+    <p class="q">confirmar payload da Toro com tudo carregado, água cheia e 2 pessoas</p>
+  </div>
+</section>
+
+<!-- ============ PRANCHA 03 ============ -->
+<section class="sheet">
+  <header class="tb">
+    <span class="tb-n">Prancha 03</span>
+    <h2>Estrado retrátil — fechado e aberto</h2>
+    <span class="tb-e">Etapa 2</span>
+  </header>
+  <figure>
+    <div class="draw">
+      <svg viewBox="0 0 940 350" role="img" aria-label="Duas seções transversais do estrado: à esquerda o modo cama com a plataforma fechada e o compartimento embaixo; à direita, metade da plataforma levantada na dobradiça piano dando acesso ao compartimento.">
+        <!-- ESQUERDA -->
+        <text class="t-b" x="60" y="34">Modo cama — fechado</text>
+        <path class="ln" d="M60,60 L60,278 L440,278 L440,60"/>
+        <rect class="ln fill" x="70" y="150" width="360" height="12"/>
+        <rect class="ln fill" x="70" y="122" width="360" height="28" rx="8"/>
+        <text class="t-s mid" x="250" y="141">colchão 12 cm D33</text>
+        <rect class="hatch" x="96" y="212" width="120" height="60"/>
+        <text class="t-s mid" x="156" y="246">bateria</text>
+        <rect class="ln-t" x="240" y="222" width="170" height="50"/>
+        <text class="t-s mid" x="325" y="252">ferramentas / esteira</text>
+        <line class="dim" x1="86" y1="162" x2="86" y2="212"/>
+        <text class="t-s" x="96" y="192">vão útil</text>
+        <!-- trilho -->
+        <circle class="acc" cx="430" cy="156" r="5"/>
+        <text class="t-a end" x="424" y="182">catraca de fixação</text>
+
+        <!-- DIREITA -->
+        <text class="t-b" x="500" y="34">Modo acesso — metade levantada</text>
+        <path class="ln" d="M500,60 L500,278 L880,278 L880,60"/>
+        <rect class="ln fill" x="510" y="150" width="180" height="12"/>
+        <rect class="ln fill" x="510" y="122" width="180" height="28" rx="8"/>
+        <line class="acc" x1="694" y1="156" x2="770" y2="66" stroke-width="11"/>
+        <line class="ln-t" x1="704" y1="150" x2="782" y2="58"/>
+        <path class="ln-d" d="M760,150 A 92 92 0 0 0 700,74" marker-end="url(#arI)"/>
+        <text class="t-a" x="700" y="182">dobradiça piano</text>
+        <rect class="hatch" x="536" y="212" width="120" height="60"/>
+        <rect class="ln-t" x="680" y="222" width="170" height="50"/>
+        <line class="dim" x1="700" y1="252" x2="850" y2="252"/>
+        <text class="t-s mid" x="775" y="242">acesso livre</text>
+      </svg>
+    </div>
+    <figcaption>A metade que levanta é o que decide onde vão os itens pesados: tudo que você precisa com a cama montada tem que ficar debaixo do lado da dobradiça.</figcaption>
+  </figure>
+  <div class="notes">
+    <p>compensado naval, dobradiça piano no eixo central</p>
+    <p>trilhos ou catracas contra deslizamento em curva e freada</p>
+    <p>peso morto embaixo: ferramenta, esteira, mantimento pesado</p>
+    <p class="q">altura do vão inferior sai da altura livre medida na Etapa 1</p>
+  </div>
+</section>
+
+<!-- ============ PRANCHA 04 ============ -->
+<section class="sheet">
+  <header class="tb">
+    <span class="tb-n">Prancha 04</span>
+    <h2>Por que a tampa fica rebatida pra dormir</h2>
+    <span class="tb-e">Etapa 2</span>
+  </header>
+  <figure>
+    <div class="draw">
+      <svg viewBox="0 0 900 430" role="img" aria-label="Comparação em planta: com a tampa fechada o comprimento de 1,35 m deixa as pessoas para fora da caçamba; com a tampa rebatida os 2,20 m acomodam duas pessoas deitadas.">
+        <!-- ESQUERDA 1,35 -->
+        <text class="t-b" x="60" y="34">Tampa fechada</text>
+        <rect class="ln" x="60" y="60" width="212" height="192"/>
+        <g class="ln-d">
+          <circle cx="112" cy="88" r="14"/><rect x="90" y="106" width="44" height="200" rx="20"/>
+          <circle cx="200" cy="88" r="14"/><rect x="178" y="106" width="44" height="200" rx="20"/>
+        </g>
+        <line class="acc" x1="60" y1="252" x2="272" y2="252"/>
+        <text class="t-a" x="60" y="336">pernas pra fora — não fecha</text>
+        <line class="dim" x1="36" y1="60" x2="36" y2="252"/>
+        <text class="t-s mid" x="36" y="156" transform="rotate(-90 36 156)">1,35 m</text>
+
+        <!-- DIREITA 2,20 -->
+        <text class="t-b" x="520" y="34">Tampa rebatida</text>
+        <rect class="ln" x="520" y="60" width="212" height="192"/>
+        <rect class="ln-d" x="520" y="252" width="212" height="120"/>
+        <g class="ln">
+          <circle cx="572" cy="88" r="14"/><rect x="550" y="106" width="44" height="200" rx="20"/>
+          <circle cx="660" cy="88" r="14"/><rect x="638" y="106" width="44" height="200" rx="20"/>
+        </g>
+        <text class="t-s" x="520" y="392">colchão avança sobre a tampa</text>
+        <line class="dim" x1="496" y1="60" x2="496" y2="372"/>
+        <text class="t-s mid" x="496" y="216" transform="rotate(-90 496 216)">2,20 m</text>
+        <!-- seta comparativa -->
+        <line class="acc" x1="330" y1="200" x2="450" y2="200" marker-end="url(#arA)"/>
+        <text class="t-a mid" x="390" y="188">+85 cm</text>
+      </svg>
+    </div>
+    <figcaption>1,35 m não é comprimento de cama de casal. A tampa rebatida é estrutura, não acessório: ela vira o pé da cama e por isso precisa de apoio e de um prolongamento firme do estrado.</figcaption>
+  </figure>
+  <div class="notes">
+    <p>prever prolongamento removível apoiado na tampa</p>
+    <p>colchão em duas partes facilita guardar de dia</p>
+    <p>tela mosquiteiro fecha o vão traseiro aberto</p>
+    <p class="q">conferir o limite de carga da tampa rebatida da Toro</p>
+  </div>
+</section>
+
+<!-- ============ PRANCHA 05 ============ -->
+<section class="sheet">
+  <header class="tb">
+    <span class="tb-n">Prancha 05</span>
+    <h2>Diagrama elétrico — duas fontes, uma proteção</h2>
+    <span class="tb-e">Etapa 3</span>
+  </header>
+  <figure>
+    <div class="draw">
+      <svg viewBox="0 0 960 500" role="img" aria-label="Diagrama elétrico: alternador alimenta o carregador DC-DC e a placa solar alimenta o MPPT; ambos carregam a bateria de lítio auxiliar, que alimenta um quadro de disjuntores e fusíveis, e deste saem geladeira 12V, bomba d'água, tomadas USB, iluminação LED e o inversor 110V.">
+        <!-- isolamento -->
+        <rect class="ln-d" x="26" y="34" width="192" height="104"/>
+        <text class="t-s" x="34" y="52">sistema de partida — isolado</text>
+        <!-- fontes -->
+        <rect class="ln fill" x="40" y="62" width="164" height="58"/>
+        <text class="t mid" x="122" y="88">alternador /</text>
+        <text class="t mid" x="122" y="106">bateria de partida</text>
+        <rect class="ln fill" x="40" y="180" width="164" height="58"/>
+        <text class="t mid" x="122" y="206">placa solar</text>
+        <text class="t mid" x="122" y="224">dobrável</text>
+        <!-- conversores -->
+        <rect class="ln fill" x="256" y="62" width="164" height="58"/>
+        <text class="t mid" x="338" y="97">carregador DC-DC</text>
+        <rect class="ln fill" x="256" y="180" width="164" height="58"/>
+        <text class="t mid" x="338" y="215">controlador MPPT</text>
+        <!-- bateria -->
+        <rect class="ln fill" x="470" y="98" width="168" height="86"/>
+        <text class="t-b mid" x="554" y="132">bateria lítio</text>
+        <text class="t-s mid" x="554" y="154">auxiliar, em caixa</text>
+        <text class="t-s mid" x="554" y="170">estanque</text>
+        <!-- quadro -->
+        <rect class="acc fill" x="470" y="238" width="168" height="66"/>
+        <text class="t-a mid" x="554" y="266">disjuntores</text>
+        <text class="t-a mid" x="554" y="284">+ fusíveis</text>
+        <!-- cargas -->
+        <g>
+          <rect class="ln fill" x="740" y="40" width="190" height="46"/><text class="t mid" x="835" y="68">geladeira 12 V</text>
+          <rect class="ln fill" x="740" y="100" width="190" height="46"/><text class="t mid" x="835" y="128">bomba d'água 12 V</text>
+          <rect class="ln fill" x="740" y="160" width="190" height="46"/><text class="t mid" x="835" y="188">USB / USB-C</text>
+          <rect class="ln fill" x="740" y="220" width="190" height="46"/><text class="t mid" x="835" y="248">iluminação LED</text>
+          <rect class="ln fill" x="740" y="280" width="190" height="46"/><text class="t mid" x="835" y="308">inversor → 110 V</text>
+        </g>
+        <!-- ligações -->
+        <g class="ln" marker-end="url(#arI)">
+          <line x1="204" y1="91" x2="250" y2="91"/>
+          <line x1="204" y1="209" x2="250" y2="209"/>
+          <polyline points="420,91 445,91 445,124 464,124"/>
+          <polyline points="420,209 445,209 445,158 464,158"/>
+          <line x1="554" y1="184" x2="554" y2="232"/>
+          <polyline points="638,258 686,258 686,63 734,63"/>
+          <polyline points="638,262 692,262 692,123 734,123"/>
+          <polyline points="638,268 698,268 698,183 734,183"/>
+          <polyline points="638,272 704,272 704,243 734,243"/>
+          <polyline points="638,290 710,290 710,303 734,303"/>
+        </g>
+        <text class="t-s mid" x="227" y="80">12 V</text>
+        <text class="t-s mid" x="227" y="198">DC</text>
+        <text class="t-s" x="430" y="76">carrega rodando</text>
+        <text class="t-s" x="430" y="230">carrega parado</text>
+        <text class="t-s" x="562" y="212">saída protegida</text>
+        <!-- nota -->
+        <line class="ln-t" x1="26" y1="392" x2="930" y2="392"/>
+        <text class="t-a" x="26" y="420">Etapa mais técnica do projeto: um circuito, um fusível — sem exceção.</text>
+        <text class="t-s" x="26" y="442">Erro de dimensionamento elétrico é o maior risco de incêndio em conversão. Feche os painéis só depois de testar tudo,</text>
+        <text class="t-s" x="26" y="460">e faça esta etapa com eletricista automotivo ou instalador de motorhome mesmo que você monte todo o resto sozinho.</text>
+      </svg>
+    </div>
+    <figcaption>As duas fontes nunca conversam entre si: o DC-DC carrega enquanto o carro roda, o MPPT carrega enquanto ele está parado, e a bateria de partida fica isolada do consumo do camping.</figcaption>
+  </figure>
+  <div class="notes">
+    <p>tomadas 12 V e USB na cabine e na área da cama</p>
+    <p>110 V só via inversor, para eletrônicos</p>
+    <p>monitor de bateria com Bluetooth acompanha o consumo pelo celular</p>
+    <p class="q">dimensionar bitola dos cabos pela distância até cada carga</p>
+  </div>
+</section>
+
+<!-- ============ PRANCHA 06 ============ -->
+<section class="sheet">
+  <header class="tb">
+    <span class="tb-n">Prancha 06</span>
+    <h2>Circuito de água — do reservatório ao ralo</h2>
+    <span class="tb-e">Etapa 4 · 5</span>
+  </header>
+  <figure>
+    <div class="draw">
+      <svg viewBox="0 0 960 300" role="img" aria-label="Circuito de água: reservatório de 40 a 50 litros alimenta a bomba 12 volts, que pressuriza a torneira da pia dobrável e um ramal para a ducha externa; a água servida vai para um galão separado.">
+        <rect class="ln fill" x="30" y="96" width="168" height="66"/>
+        <text class="t mid" x="114" y="124">reservatório</text>
+        <text class="t mid" x="114" y="142">40–50 L</text>
+
+        <rect class="ln fill" x="266" y="96" width="150" height="66"/>
+        <text class="t mid" x="341" y="131">bomba 12 V</text>
+
+        <rect class="ln fill" x="524" y="30" width="196" height="62"/>
+        <text class="t mid" x="622" y="56">torneira +</text>
+        <text class="t mid" x="622" y="74">pia dobrável</text>
+
+        <rect class="acc-d" x="524" y="176" width="196" height="62"/>
+        <text class="t-a mid" x="622" y="202">ducha externa +</text>
+        <text class="t-a mid" x="622" y="220">bag solar (ideia extra)</text>
+
+        <rect class="ln fill" x="782" y="30" width="150" height="62"/>
+        <text class="t mid" x="857" y="56">água servida</text>
+        <text class="t mid" x="857" y="74">galão à parte</text>
+
+        <g class="ln" marker-end="url(#arI)">
+          <line x1="198" y1="129" x2="260" y2="129"/>
+          <polyline points="416,129 470,129 470,61 518,61"/>
+          <line x1="720" y1="61" x2="776" y2="61"/>
+        </g>
+        <polyline class="acc" points="416,141 452,141 452,207 518,207" marker-end="url(#arA)"/>
+        <text class="t-s mid" x="229" y="118">sucção</text>
+        <text class="t-s" x="478" y="112">pressão</text>
+        <text class="t-s mid" x="748" y="50">dreno</text>
+        <!-- alimentacao eletrica -->
+        <line class="ln-d" x1="341" y1="240" x2="341" y2="168" marker-end="url(#arI)"/>
+        <text class="t-s mid" x="341" y="262">12 V do quadro (prancha 05)</text>
+      </svg>
+    </div>
+    <figcaption>A bomba só existe depois que o elétrico está pronto e testado — por isso a água é a Etapa 4, e não a 2. Teste vedação e pressão com o tanque cheio antes de rodar com ele instalado.</figcaption>
+  </figure>
+  <div class="notes">
+    <p>reservatório no lado oposto à bateria</p>
+    <p>água servida não volta ao tanque: galão separado</p>
+    <p>bag solar preto aquece a água da ducha durante o dia</p>
+    <p class="q">medir consumo por dia para dimensionar 40 ou 50 L</p>
+  </div>
+</section>
+
+<!-- ============ PRANCHA 07 ============ -->
+<section class="sheet">
+  <header class="tb">
+    <span class="tb-n">Prancha 07</span>
+    <h2>Módulo de cozinha retrátil</h2>
+    <span class="tb-e">Etapa 5</span>
+  </header>
+  <figure>
+    <div class="draw">
+      <svg viewBox="0 0 940 360" role="img" aria-label="Corte do módulo de cozinha: a estrutura fixa abriga a geladeira 12 volts e a gaveta desliza para fora da caçamba levando o fogareiro embutido e a pia dobrável.">
+        <!-- estrutura fixa -->
+        <rect class="ln fill" x="110" y="108" width="370" height="176"/>
+        <text class="t-s" x="122" y="130">estrutura fixa na caçamba</text>
+        <rect class="ln-t" x="132" y="166" width="170" height="106"/>
+        <text class="t mid" x="217" y="212">geladeira</text>
+        <text class="t mid" x="217" y="230">12 V</text>
+        <line class="ln-d" x1="217" y1="284" x2="217" y2="320" marker-end="url(#arI)"/>
+        <text class="t-s mid" x="217" y="340">12 V do quadro</text>
+        <!-- gaveta -->
+        <rect class="ln fill" x="480" y="142" width="320" height="92"/>
+        <text class="t-s mid" x="640" y="216">gaveta da cozinha</text>
+        <!-- fogareiro -->
+        <rect class="acc" x="512" y="118" width="120" height="24"/>
+        <circle class="acc" cx="542" cy="130" r="7"/><circle class="acc" cx="602" cy="130" r="7"/>
+        <text class="t-a mid" x="572" y="108">fogareiro embutido</text>
+        <!-- pia -->
+        <path class="ln" d="M664,118 L780,118 L762,142 L682,142 Z"/>
+        <text class="t-s mid" x="722" y="108">pia dobrável</text>
+        <!-- trilho e curso -->
+        <line class="ln" x1="480" y1="248" x2="812" y2="248"/>
+        <line class="dim" x1="486" y1="292" x2="806" y2="292"/>
+        <text class="t-s mid" x="646" y="282">curso da gaveta — cozinha fica fora do carro</text>
+        <line class="ln-t" x1="480" y1="254" x2="480" y2="298"/>
+        <line class="ln-t" x1="806" y1="240" x2="806" y2="298"/>
+        <!-- limite da caçamba -->
+        <line class="acc-d" x1="480" y1="60" x2="480" y2="320"/>
+        <text class="t-a" x="490" y="76">lateral da caçamba</text>
+      </svg>
+    </div>
+    <figcaption>Cozinhar fora do carro é regra de segurança, não de conforto: a gaveta leva o fogareiro pra fora da estrutura fechada, debaixo do toldo. A geladeira fica dentro, ligada e nivelada.</figcaption>
+  </figure>
+  <div class="notes">
+    <p>corrediças com trava aberta e fechada</p>
+    <p>botijão sempre fora, nunca no compartimento fechado</p>
+    <p>pia alimentada pela bomba (prancha 06)</p>
+    <p class="q">definir se o módulo sai pela lateral ou pela tampa traseira</p>
+  </div>
+</section>
+
+<!-- ============ PRANCHA 08 ============ -->
+<section class="sheet">
+  <header class="tb">
+    <span class="tb-n">Prancha 08</span>
+    <h2>Acampamento montado — o que ocupa o chão</h2>
+    <span class="tb-e">Etapa 7</span>
+  </header>
+  <figure>
+    <div class="draw">
+      <svg viewBox="0 0 960 540" role="img" aria-label="Planta do acampamento montado: o toldo lateral de 2,5 metros cobre mesa e cadeiras ao lado da Toro, com varal de luz LED, rede e parede lateral removível para banho; a tampa rebatida estende a cama para trás.">
+        <!-- veiculo -->
+        <rect class="hatch" x="380" y="90" width="170" height="140"/>
+        <text class="t-s mid" x="465" y="166">cabine</text>
+        <rect class="ln fill-s" x="380" y="230" width="170" height="196"/>
+        <text class="t-b mid" x="465" y="322">caçamba</text>
+        <text class="t-s mid" x="465" y="344">cama montada</text>
+        <rect class="ln-d" x="380" y="426" width="170" height="70"/>
+        <text class="t-s mid" x="465" y="466">tampa rebatida</text>
+        <!-- toldo -->
+        <rect class="acc-d" x="95" y="140" width="285" height="286"/>
+        <text class="t-a" x="107" y="164">toldo lateral 2,5 m</text>
+        <!-- mesa e cadeiras -->
+        <rect class="ln" x="180" y="236" width="120" height="76"/>
+        <text class="t-s mid" x="240" y="280">mesa retrátil</text>
+        <circle class="ln" cx="148" cy="274" r="22"/>
+        <circle class="ln" cx="332" cy="274" r="22"/>
+        <text class="t-s mid" x="240" y="358">cadeiras</text>
+        <!-- varal LED -->
+        <polyline class="ln-t" points="100,206 145,196 190,206 235,196 280,206 325,196 370,206"/>
+        <text class="t-s" x="100" y="190">varal de luz LED solar</text>
+        <!-- rede -->
+        <path class="ln-d" d="M110,392 Q 240,352 370,392"/>
+        <text class="t-s mid" x="240" y="412">rede</text>
+        <!-- parede removivel -->
+        <rect class="acc-d" x="95" y="440" width="180" height="76"/>
+        <text class="t-a mid" x="185" y="472">parede removível</text>
+        <text class="t-a mid" x="185" y="490">— área de banho</text>
+        <!-- cotas -->
+        <line class="dim" x1="95" y1="60" x2="380" y2="60"/>
+        <text class="t-s mid" x="237" y="50">2,50 m de toldo</text>
+        <line class="dim" x1="380" y1="60" x2="550" y2="60"/>
+        <text class="t-s mid" x="465" y="50">1,49 m</text>
+        <line class="ln-t" x1="95" y1="66" x2="95" y2="140"/>
+        <line class="ln-t" x1="380" y1="66" x2="380" y2="90"/>
+        <line class="ln-t" x1="550" y1="66" x2="550" y2="90"/>
+        <!-- vento -->
+        <line class="ln-t" x1="700" y1="160" x2="700" y2="430" marker-end="url(#ar)"/>
+        <text class="t-b" x="686" y="144">vento</text>
+        <text class="t-s" x="714" y="292">recolher o toldo</text>
+        <text class="t-s" x="714" y="310">se a direção virar</text>
+      </svg>
+    </div>
+    <figcaption>Somando toldo e carro, o acampamento pede cerca de 4 m de largura livre — o que decide se a vaga do camping serve. A área de banho e a rede são as ideias extras do projeto, marcadas em tracejado laranja.</figcaption>
+  </figure>
+  <div class="notes">
+    <p>rack de teto é a base do toldo — instalar antes</p>
+    <p>estaqueamento e tirantes obrigatórios em vento</p>
+    <p>lixo em balde com tampa hermética, longe da cozinha</p>
+    <p class="q">testar resistência do toldo na saída de teste da Etapa 9</p>
+  </div>
+</section>
+
+<footer>
+  <p><b>Como usar estas pranchas:</b> leve a 02 e a 03 pra medição da Etapa 1 e escreva as cotas reais por cima — todas as outras dependem delas. A 05 é a única que não se resolve só com desenho: leve pro eletricista automotivo antes de comprar cabo.</p>
+  <p>Desenhos esquemáticos, proporção aproximada. Não substituem projeto elétrico assinado nem verificação de payload do veículo.</p>
+</footer>
+
+</div>
